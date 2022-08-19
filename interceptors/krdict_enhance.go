@@ -1,6 +1,7 @@
 package interceptors
 
 import (
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"log"
@@ -89,7 +90,12 @@ func fetchEntryNode(entryID string, options map[string]string) (*xmlpath.Node, e
 		entryID,
 	)
 
-	resp, err := http.Get(url)
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(url)
 	if err != nil {
 		log.Printf("download type=eng url=%q err=%q", url, err)
 		return nil, err

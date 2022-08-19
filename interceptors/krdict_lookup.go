@@ -2,6 +2,7 @@ package interceptors
 
 import (
 	"bufio"
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"io"
@@ -119,7 +120,12 @@ func search(q string, options map[string]string) (*xmlpath.Node, error) {
 		q,
 	)
 
-	resp, err := http.Get(url)
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Get(url)
 	if err != nil {
 		return nil, err
 	}
