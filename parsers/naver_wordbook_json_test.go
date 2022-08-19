@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 )
 
 func TestParseNaverWordbookJSON(t *testing.T) {

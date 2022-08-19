@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"go.ryanbrainard.com/jjogaegi/formatters"
-	"go.ryanbrainard.com/jjogaegi/parsers"
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/formatters"
+	"github.com/liy-che/jjogaegi/parsers"
+	"github.com/liy-che/jjogaegi/pkg"
 	"github.com/stretchr/testify/assert"
 )
 

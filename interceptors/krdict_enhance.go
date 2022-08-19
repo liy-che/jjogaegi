@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 	"launchpad.net/xmlpath"
 )
 

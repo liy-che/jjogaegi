@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 )
 
 // TODO: temp screenscaping solution until API improves. remove this interceptor asap!

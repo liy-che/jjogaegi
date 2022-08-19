@@ -3,7 +3,7 @@ package parsers
 import (
 	"context"
 	"encoding/json"
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 	"io"
 	"log"
 )

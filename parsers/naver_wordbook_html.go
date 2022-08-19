@@ -2,7 +2,7 @@ package parsers
 
 import (
 	"context"
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 	"io"
 	"launchpad.net/xmlpath"
 	"strings"

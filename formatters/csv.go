@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 )
 
 func FormatCSV(ctx context.Context, items <-chan *pkg.Item, w io.Writer, options map[string]string) error {

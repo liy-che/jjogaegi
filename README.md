@@ -10,7 +10,7 @@ Command line utility to create, parse, and format Korean vocabulary to import in
 
 This is a command-line application and requires basic knowledge of using command line. If you are unfamiliar with the command line, see a tutorial like [this one](https://lifehacker.com/5633909/who-needs-a-mouse-learn-to-use-the-command-line-for-almost-anything) for your platform. 
 
-Go to the [release page](https://github.com/ryanbrainard/jjogaegi/releases) and download the latest release for your platform. Unzip the release and contained the `jjogaegi` binary can be placed anywhere on your computer.
+Go to the [release page](https://github.com/liy-che/jjogaegi/releases) and download the latest release for your platform. Unzip the release and contained the `jjogaegi` binary can be placed anywhere on your computer.
 
 Before use, it is highly recommended to set the following [environment variables](https://www.schrodinger.com/kb/1842): 
 
@@ -40,7 +40,7 @@ The column order for parsing and formatting TSV and CSV files is fixed as follow
 - **Example 2 Korean**
 - **Example 2 English**
 
-To configure Anki to support these columns, import the [sample Anki card](https://github.com/ryanbrainard/jjogaegi/raw/master/assets/anki-sample-card.apkg) to create the `Korean++` note type.
+To configure Anki to support these columns, import the [sample Anki card](https://github.com/liy-che/jjogaegi/raw/master/assets/anki-sample-card.apkg) to create the `Korean++` note type.
 
 ### Prompt Mode
 

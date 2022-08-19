@@ -9,8 +9,8 @@ import (
 
 	"os"
 
-	"go.ryanbrainard.com/jjogaegi/interceptors"
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/interceptors"
+	"github.com/liy-che/jjogaegi/pkg"
 	"golang.org/x/sync/errgroup"
 )
 

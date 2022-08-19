@@ -5,7 +5,7 @@ import (
 	"encoding/csv"
 	"io"
 
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 )
 
 func ParseTSV(ctx context.Context, in io.Reader, items chan<- *pkg.Item, options map[string]string) error {

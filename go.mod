@@ -1,4 +1,4 @@
-module go.ryanbrainard.com/jjogaegi
+module github.com/liy-che/jjogaegi
 
 go 1.12
 

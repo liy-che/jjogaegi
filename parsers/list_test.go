@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 	"github.com/stretchr/testify/assert"
 )
 

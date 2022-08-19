@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 )
 
 func FormatJSON(ctx context.Context, items <-chan *pkg.Item, w io.Writer, options map[string]string) error {

@@ -9,7 +9,7 @@ import (
 
 	"bufio"
 	"github.com/google/uuid"
-	"go.ryanbrainard.com/jjogaegi/pkg"
+	"github.com/liy-che/jjogaegi/pkg"
 	"mime"
 	"path"
 	"regexp"

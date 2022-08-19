@@ -3,8 +3,8 @@ package jjogaegigprc
 import (
 	"bytes"
 	"context"
-	"go.ryanbrainard.com/jjogaegi/cmd"
-	"go.ryanbrainard.com/jjogaegi/run"
+	"github.com/liy-che/jjogaegi/cmd"
+	"github.com/liy-che/jjogaegi/run"
 	"io"
 	"log"
 	"sync"
