@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/liy-che/jjogaegi/pkg"
 	"io"
-	"launchpad.net/xmlpath"
+	"gopkg.in/xmlpath.v2"
 	"strings"
 )
 

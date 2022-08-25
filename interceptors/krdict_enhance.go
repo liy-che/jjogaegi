@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/liy-che/jjogaegi/pkg"
-	"launchpad.net/xmlpath"
+	"gopkg.in/xmlpath.v2"
 )
 
 func KrDictEnhance(item *pkg.Item, options map[string]string) error {
@@ -23,6 +23,37 @@ func KrDictEnhance(item *pkg.Item, options map[string]string) error {
 	entry, err := fetchEntryNode(entryID, options)
 	if err != nil {
 		return err
+	}
+
+	switch len(item.Examples) {
+	case 0:
+		item.Examples = make([]pkg.Translation, 2, 2)
+	case 1:
+		item.Examples = append(item.Examples, pkg.Translation{})
+	}
+
+	// if the searched is a idiom, aka not a single word
+	if strings.Contains(item.Hangul, " ") {
+		query := fmt.Sprintf("//*[contains(subword, '%s')]/subsense_info", item.Hangul)
+		if item.Def.Korean == "" {
+			q := query + "/definition"
+			item.Def.Korean = pkg.XpathString(entry, q)
+		}
+		if item.Def.English == "" {
+			q := query + "/translation"
+			item.Def.English = getEnglishDefinition(entry, q)
+		}
+
+		idx := 0
+		q := query + "/example_info"
+		if item.Examples[0].Korean == "" {
+			item.Examples[0], idx = getExample(entry, "문장", q, idx)
+		}
+	
+		if item.Examples[1].Korean == "" && idx != -1 {
+			item.Examples[1], _ = getExample(entry, "문장", q, idx)
+		}
+		return nil
 	}
 
 	if item.Hangul == "" {
@@ -46,26 +77,19 @@ func KrDictEnhance(item *pkg.Item, options map[string]string) error {
 	}
 
 	if item.Def.English == "" {
-		item.Def.English = getEnglishDefinition(entry)
+		item.Def.English = getEnglishDefinition(entry, "/channel/item/word_info/sense_info/translation")
 	}
 
 	if item.Antonym == "" {
 		item.Antonym = pkg.XpathString(entry, "/channel/item/word_info/sense_info/rel_info[type='반대말']/word")
 	}
-
-	switch len(item.Examples) {
-	case 0:
-		item.Examples = make([]pkg.Translation, 2, 2)
-	case 1:
-		item.Examples = append(item.Examples, pkg.Translation{})
-	}
 	
 	if item.Examples[0].Korean == "" {
-		item.Examples[0] = getExample(entry, "구")
+		item.Examples[0], _ = getExample(entry, "구", "/channel/item/word_info/sense_info/example_info", 0)
 	}
 
 	if item.Examples[1].Korean == "" {
-		item.Examples[1] = getExample(entry, "문장")
+		item.Examples[1], _ = getExample(entry, "문장", "/channel/item/word_info/sense_info/example_info", 0)
 	}
 
 	if item.ImageTag == "" {
@@ -109,8 +133,7 @@ func fetchEntryNode(entryID string, options map[string]string) (*xmlpath.Node, e
 	return xmlpath.Parse(resp.Body)
 }
 
-func getEnglishDefinition(node *xmlpath.Node) string {
-	transPath := "/channel/item/word_info/sense_info/translation"
+func getEnglishDefinition(node *xmlpath.Node, transPath string) string {
 	transWord := pkg.XpathString(node, transPath+"/trans_word")
 	transDfn := pkg.XpathString(node, transPath+"/trans_dfn")
 
@@ -128,8 +151,9 @@ func getWordGrade(node *xmlpath.Node) string {
 	}
 }
 
-func getExample(node *xmlpath.Node, exampleType string) pkg.Translation {
-	examplesIter := xmlpath.MustCompile("/channel/item/word_info/sense_info/example_info").Iter(node)
+func getExample(node *xmlpath.Node, exampleType string, examplePath string, loc int) (pkg.Translation, int) {
+	examplesIter := xmlpath.MustCompile(examplePath).Iter(node)
+	idx := 1
 	for {
 		if !examplesIter.Next() {
 			break
@@ -137,11 +161,13 @@ func getExample(node *xmlpath.Node, exampleType string) pkg.Translation {
 
 		exampleNode := examplesIter.Node()
 
-		if pkg.XpathString(exampleNode, "type") == exampleType {
-			return pkg.Translation{Korean: pkg.XpathString(exampleNode, "example")}
+		if pkg.XpathString(exampleNode, "type") == exampleType && idx > loc {
+			return pkg.Translation{Korean: pkg.XpathString(exampleNode, "example")}, idx
 		}
+
+		idx += 1
 	}
-	return pkg.Translation{}
+	return pkg.Translation{}, -1
 }
 
 func removeDuplicateCharacters(text string) string {

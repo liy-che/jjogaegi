@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/liy-che/jjogaegi/pkg"
-	"launchpad.net/xmlpath"
+	"gopkg.in/xmlpath.v2"
 )
 
 const supportedLanguage = "kor"

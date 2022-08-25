@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/liy-che/jjogaegi/pkg"
-	"launchpad.net/xmlpath"
+	"gopkg.in/xmlpath.v2"
 )
 
 func NewKrDictLookup(interactiveIn io.Reader, interactiveOut io.Writer) pkg.InterceptorFunc {
@@ -119,6 +119,16 @@ func search(q string, options map[string]string) (*xmlpath.Node, error) {
 		options[pkg.OPT_KRDICT_API_KEY],
 		q,
 	)
+
+	// The searched is a idiom, aka not a word
+	if strings.Contains(q, " ") {
+		url = fmt.Sprintf(
+			"%s/api/search?key=%s&type_search=search&part=ip&q=%s&sort=dict&translated=y&trans_lang=1",
+			options[pkg.OPT_KRDICT_API_URL],
+			options[pkg.OPT_KRDICT_API_KEY],
+			strings.ReplaceAll(q, " ", "+"),
+		)
+	}
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},

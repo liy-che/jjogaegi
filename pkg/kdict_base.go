@@ -3,7 +3,7 @@ package pkg
 import (
 	"strings"
 
-	"launchpad.net/xmlpath"
+	"gopkg.in/xmlpath.v2"
 )
 
 func KrDictID(lang, entryId, lexicalUnit string) string {

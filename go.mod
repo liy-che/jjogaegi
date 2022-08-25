@@ -16,5 +16,6 @@ require (
 	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f
 	google.golang.org/grpc v1.21.1
 	gopkg.in/bluesuncorp/validator.v5 v5.9.1 // indirect
-	launchpad.net/xmlpath v0.0.0-20130614043138-000000000004
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+	gopkg.in/xmlpath.v2 v2.0.0-20150820204837-860cbeca3ebc
 )
