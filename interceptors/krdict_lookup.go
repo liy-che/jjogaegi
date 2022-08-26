@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -56,11 +57,22 @@ func krDictLookup(in io.Reader, out io.Writer, item *pkg.Item, options map[strin
 
 		result := resultsIntr.Node()
 
-		if item.Hangul != pkg.XpathString(result, "word") {
+		resultWord := pkg.XpathString(result, "word")
+
+		// 입(을) 모으다 -> 밉 모으다
+		reExclude := regexp.MustCompile(`\([^)]*\)`)
+		excludeWord := reExclude.ReplaceAllString(resultWord, "")
+
+		// 입(을) 모으다 -> 입을 모으다
+		reInclude := regexp.MustCompile(`\(|\)`)
+		includeWord := reInclude.ReplaceAllString(resultWord, "")
+
+		if item.Hangul != resultWord && item.Hangul != excludeWord && item.Hangul != includeWord {
 			continue
 		}
 
 		choices = append(choices, result)
+		item.Hangul = resultWord
 	}
 
 	itemLabel := item.Hangul
@@ -113,6 +125,9 @@ func krDictLookup(in io.Reader, out io.Writer, item *pkg.Item, options map[strin
 }
 
 func search(q string, options map[string]string) (*xmlpath.Node, error) {
+	reExclude := regexp.MustCompile(`\([^)]*\)`)
+	q = reExclude.ReplaceAllString(q, "")
+
 	url := fmt.Sprintf(
 		"%s/api/search?key=%s&type_search=search&part=word&q=%s&sort=dict&translated=y&trans_lang=1",
 		options[pkg.OPT_KRDICT_API_URL],
