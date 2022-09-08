@@ -51,7 +51,8 @@ func Run(in io.Reader, out io.Writer, parse pkg.ParseFunc, format pkg.FormatFunc
 		interceptors.GenerateNoteId,
 		interceptors.NewKrDictLookup(os.Stdin, os.Stderr),
 		interceptors.KrDictEnhance,
-		interceptors.KrDictEnhanceHTML,
+		// temporarily disabled to avoid duplication of audio
+		// interceptors.KrDictEnhanceHTML,
 		interceptors.MediaFormatting,
 	}
 	intercepted := make(chan *pkg.Item)
