@@ -53,7 +53,8 @@ func Run(in io.Reader, out io.Writer, parse pkg.ParseFunc, format pkg.FormatFunc
 		interceptors.KrDictEnhance,
 		// temporarily disabled to avoid duplication of audio
 		// interceptors.KrDictEnhanceHTML,
-		interceptors.MediaFormatting,
+		// temporarily disabled image
+		//interceptors.MediaFormatting,
 	}
 	intercepted := make(chan *pkg.Item)
 	var iwg sync.WaitGroup
