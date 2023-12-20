@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -129,21 +130,19 @@ func search(q string, options map[string]string) (*xmlpath.Node, error) {
 	q = reExclude.ReplaceAllString(q, "")
 
 	url := fmt.Sprintf(
-		"%s/api/search?key=%s&type_search=search&part=word&q=%s&sort=dict&translated=y&trans_lang=1",
+		"%s/api/search?key=%s&type_search=search&q=%s&sort=dict&translated=y&trans_lang=1",
 		options[pkg.OPT_KRDICT_API_URL],
 		options[pkg.OPT_KRDICT_API_KEY],
-		q,
+		url.QueryEscape(q),
 	)
 
 	// The searched is a idiom, aka not a word
 	if strings.Contains(q, " ") {
-		url = fmt.Sprintf(
-			"%s/api/search?key=%s&type_search=search&part=ip&q=%s&sort=dict&translated=y&trans_lang=1",
-			options[pkg.OPT_KRDICT_API_URL],
-			options[pkg.OPT_KRDICT_API_KEY],
-			strings.ReplaceAll(q, " ", "+"),
-		)
+		url += "&part=ip"
+	} else {
+		url += "&part=word"
 	}
+
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
